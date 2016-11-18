@@ -131,9 +131,10 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Xbox360Controller.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="360Controller.h" />
+    <ClInclude Include="Xbox360Controller.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
