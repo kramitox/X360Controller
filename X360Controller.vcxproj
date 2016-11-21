@@ -140,6 +140,9 @@
   <ItemGroup>
     <Image Include="controller.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="times.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
