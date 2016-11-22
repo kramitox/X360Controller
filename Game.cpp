@@ -45,6 +45,22 @@ void Game::update()
 	rightAnalogX.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.y));
 	leftAnalogY.setString(std::to_string((int)gamePad.m_currentState.LeftThumbStick.y));
 	rightAnalogY.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.y));
+	if (gamePad.m_currentState.d_Down)
+	{
+		dPadY.setString("Down");
+	}
+	else if (gamePad.m_currentState.d_Up)
+	{
+		dPadY.setString("Up");
+	}
+	if (gamePad.m_currentState.d_Left)
+	{
+		dPadX.setString("Left");
+	}
+	else if (gamePad.m_currentState.d_Right)
+	{
+		dPadX.setString("Right");
+	}
 	LTrigger.setString(std::to_string((int)gamePad.m_currentState.LTrigger));
 	RTrigger.setString(std::to_string((int)gamePad.m_currentState.RTrigger));
 }
@@ -65,17 +81,20 @@ void Game::initialiseText()
 	setTextProperties(pressedBText,750,360);
 	setTextProperties(pressedXText,750,300);
 	setTextProperties(pressedYText,750,240);
-	setTextProperties(pressedStartText,720,425);
+	setTextProperties(pressedStartText,760,500);
 	setTextProperties(leftAnalogX, 50, 265);
 	setTextProperties(leftAnalogY, 50, 285);
-	setTextProperties(leftAnalogPress, 720, 425);
-	setTextProperties(rightAnalogX, 720, 425);
-	setTextProperties(rightAnalogY, 720, 425);
-	setTextProperties(rightAnalogPressed, 720, 425);
-	setTextProperties(RBPressed, 720, 425);
-	setTextProperties(LBPressed, 720, 425);
-	setTextProperties(LTrigger, 720, 425);
-	setTextProperties(RTrigger, 720, 425);
+	setTextProperties(leftAnalogPress, 50, 310);
+	setTextProperties(rightAnalogX, 520, 520);
+	setTextProperties(rightAnalogY, 520, 545);
+	setTextProperties(rightAnalogPressed, 520, 565);
+	setTextProperties(RBPressed, 700, 125);
+	setTextProperties(LBPressed, 75, 125);
+	setTextProperties(LTrigger, 200, 30);
+	setTextProperties(RTrigger, 575, 30);
+	setTextProperties(dPadX, 250, 500);
+	setTextProperties(dPadY, 250, 525);
+
 }
 void Game::setTextProperties(sf::Text &text, int x, int y)
 {
@@ -85,8 +104,26 @@ void Game::setTextProperties(sf::Text &text, int x, int y)
 	text.setString("Pressed");
 	text.setPosition(x, y);
 }
+
 void Game::drawText()
 {
+	m_window.draw(pressedAText);
+	m_window.draw(pressedBText);
+	m_window.draw(pressedXText);
+	m_window.draw(pressedYText);
+	m_window.draw(leftAnalogX);
+	m_window.draw(leftAnalogY);
+	m_window.draw(leftAnalogPress);
+	m_window.draw(rightAnalogX);
+	m_window.draw(rightAnalogY);
+	m_window.draw(rightAnalogPressed);
+	m_window.draw(LTrigger);
+	m_window.draw(RTrigger); 
+	m_window.draw(LBPressed);
+	m_window.draw(RBPressed);
+	m_window.draw(dPadX);
+	m_window.draw(dPadY);
+	m_window.draw(pressedStartText);
 	if (gamePad.m_currentState.A)
 	{
 		m_window.draw(pressedAText);

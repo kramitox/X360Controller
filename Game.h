@@ -6,9 +6,12 @@
 	#include <iostream>
 #endif // !SFML
 #include "Xbox360Controller.h"
+
+
 class Game
 {
 public:
+
 	Game();
 	~Game();
 	void run();
@@ -42,6 +45,8 @@ private:
 	sf::Text LBPressed;
 	sf::Text LTrigger;
 	sf::Text RTrigger;
+	sf::Text dPadX;
+	sf::Text dPadY;
 	sf::RenderWindow m_window;
 	xbox360Controller gamePad;
 };

@@ -8,6 +8,7 @@
 /// </summary>
 struct GamePadState
 {
+	//Booleans to check if the button is pressed
 	bool A;
 	bool B;
 	bool X;
@@ -22,9 +23,10 @@ struct GamePadState
 	bool d_Right;
 	bool back;
 	bool start;
-	//bool xboxGuide;
+	//Floats to store how far the trigger has been pulled
 	float LTrigger;
 	float RTrigger;
+	//Vectors to store the X and Y co-ordinate of the analog stick using center(stationary) as 0,0
 	sf::Vector2f RightThumbStick;
 	sf::Vector2f LeftThumbStick;
 };
@@ -43,11 +45,15 @@ public:
 	GamePadState m_currentState;
 	//State of buttons on controller during last frame.
 	GamePadState m_previousState;
-
+	//Constructor
 	xbox360Controller();
+	//Deconstructor
 	~xbox360Controller();
+	//Method that handles updating the gamepad information
 	void update();
+	//Bool For checking if the controller is connected
 	bool isConnected();
+	//Bool to check if we need to connect a controller.
 	bool connect();
 
 };
