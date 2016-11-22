@@ -61,13 +61,13 @@ void xbox360Controller::update()
 	//RT && LT = Z
 	m_currentState.LeftThumbStick = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y));
 	m_currentState.RightThumbStick = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -10)
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -5)
 	{
-		m_currentState.LTrigger = -(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z));
+		m_currentState.RTrigger = -(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z));
 	}
-	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) > 10)
+	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) > 5)
 	{
-		m_currentState.RTrigger = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z);
+		m_currentState.LTrigger = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z);
 	}
 	else
 	{

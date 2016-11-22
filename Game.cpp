@@ -1,18 +1,22 @@
 #include "Game.h"
 
 
-
+/// <summary>
+/// Constructor for our game that sets up a window for our game to run in.
+/// </summary>
 Game::Game() : m_window(sf::VideoMode(900, 600, 32), "Controller", sf::Style::Default)
 {
 	
 }
+/// <summary>
+/// Initialise method that loads in fonts, textures and sets up everything in our game.
+/// </summary>
 void Game::initialise()
 {
 	if (!font.loadFromFile("times.ttf"))
 	{
+		std::cout << "Error Loading Font File" << std::endl;
 	}
-
-
 	if (!m_background.loadFromFile("controller.jpg"))
 	{
 		std::cout << "Error Loading Background File" << std::endl;
@@ -21,12 +25,16 @@ void Game::initialise()
 	initialiseText();
 	//m_sprite.setScale(0.1, 0.1);
 }
-
+/// <summary>
+/// Deconstructor method for if we need to destroy anything we may assign to the heap before closing our game.
+/// </summary>
 Game::~Game()
 {
 
 }
-
+/// <summary>
+/// Run method. This is the main loop of our game which calls initialise and then loops through update and draw.
+/// </summary>
 void Game::run()
 {
 	initialise();
@@ -36,15 +44,19 @@ void Game::run()
 		draw();
 	}
 }
-
+/// <summary>
+/// Update method which handles updating the gamepad and updating any strings related to data from the controller.
+/// </summary>
 void Game::update()
 {
 	
 	gamePad.update();
-	leftAnalogX.setString(std::to_string((int)gamePad.m_currentState.LeftThumbStick.x));
-	rightAnalogX.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.y));
+	// Sets the data to the analog text objects from the gamepad data structure.
+	leftAnalogX.setString(std::to_string((int)gamePad.m_currentState.LeftThumbStick.x));			
+	rightAnalogX.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.x));
 	leftAnalogY.setString(std::to_string((int)gamePad.m_currentState.LeftThumbStick.y));
 	rightAnalogY.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.y));
+	// Depending on the data value from the D-pad joystick, we set the string to up,down and left,right.
 	if (gamePad.m_currentState.d_Down)
 	{
 		dPadY.setString("Down");
@@ -61,10 +73,16 @@ void Game::update()
 	{
 		dPadX.setString("Right");
 	}
+	if (gamePad.m_currentState.back)
+	{
+		m_window.close();
+	}
 	LTrigger.setString(std::to_string((int)gamePad.m_currentState.LTrigger));
 	RTrigger.setString(std::to_string((int)gamePad.m_currentState.RTrigger));
 }
-
+/// <summary>
+/// Draw method which 
+/// </summary>
 void Game::draw()
 {
 	m_window.clear(sf::Color(1, 1, 1, 1));
@@ -107,23 +125,40 @@ void Game::setTextProperties(sf::Text &text, int x, int y)
 
 void Game::drawText()
 {
-	m_window.draw(pressedAText);
-	m_window.draw(pressedBText);
-	m_window.draw(pressedXText);
-	m_window.draw(pressedYText);
-	m_window.draw(leftAnalogX);
-	m_window.draw(leftAnalogY);
-	m_window.draw(leftAnalogPress);
-	m_window.draw(rightAnalogX);
-	m_window.draw(rightAnalogY);
-	m_window.draw(rightAnalogPressed);
+	//m_window.draw(leftAnalogX);
+	//m_window.draw(leftAnalogY);
+	if (gamePad.m_currentState.LeftThumbstickDown)
+	{
+		m_window.draw(leftAnalogPress);
+	}
+	//m_window.draw(rightAnalogX);
+	//m_window.draw(rightAnalogY);
+	if (gamePad.m_currentState.RightThumbstickDown)
+	{
+		m_window.draw(rightAnalogPressed);
+	}
 	m_window.draw(LTrigger);
 	m_window.draw(RTrigger); 
-	m_window.draw(LBPressed);
-	m_window.draw(RBPressed);
-	m_window.draw(dPadX);
-	m_window.draw(dPadY);
-	m_window.draw(pressedStartText);
+	if (gamePad.m_currentState.LB)
+	{
+		m_window.draw(LBPressed);
+	}
+	if (gamePad.m_currentState.RB)
+	{
+		m_window.draw(RBPressed);
+	}
+	if (gamePad.m_currentState.d_Left || gamePad.m_currentState.d_Right)
+	{
+		m_window.draw(dPadX);
+	}
+	if (gamePad.m_currentState.d_Up || gamePad.m_currentState.d_Down)
+	{
+		m_window.draw(dPadY);
+	}
+	if (gamePad.m_currentState.start)
+	{
+		m_window.draw(pressedStartText);
+	}
 	if (gamePad.m_currentState.A)
 	{
 		m_window.draw(pressedAText);
@@ -140,23 +175,19 @@ void Game::drawText()
 	{
 		m_window.draw(pressedYText);
 	}
-	if (gamePad.m_currentState.back)
-	{
-		m_window.close();
-	}
-	if (gamePad.m_currentState.LeftThumbStick.x < -25 || gamePad.m_currentState.LeftThumbStick.x > 25)
+	if (gamePad.m_currentState.LeftThumbStick.x < -10 || gamePad.m_currentState.LeftThumbStick.x > 10)
 	{
 		m_window.draw(leftAnalogX);
 	}
-	if (gamePad.m_currentState.LeftThumbStick.y < -25 || gamePad.m_currentState.LeftThumbStick.y > 25)
+	if (gamePad.m_currentState.LeftThumbStick.y < -10 || gamePad.m_currentState.LeftThumbStick.y > 10)
 	{
 		m_window.draw(leftAnalogY);
 	}
-	if (gamePad.m_currentState.RightThumbStick.x < -25 || gamePad.m_currentState.RightThumbStick.x > 25)
+	if (gamePad.m_currentState.RightThumbStick.x < -10 || gamePad.m_currentState.RightThumbStick.x > 10)
 	{
 		m_window.draw(rightAnalogX);
 	}
-	if (gamePad.m_currentState.RightThumbStick.y < -25 || gamePad.m_currentState.RightThumbStick.y > 25)
+	if (gamePad.m_currentState.RightThumbStick.y < -10 || gamePad.m_currentState.RightThumbStick.y > 10)
 	{
 		m_window.draw(rightAnalogY);
 	}

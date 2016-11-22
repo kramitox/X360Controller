@@ -10,12 +10,15 @@
 /// <summary>
 /// Name: Keenan McEntee
 /// Student ID: C00201892
-/// 
+/// Description: Small SFML based game that reads keys from a controller and outputs when they are pressed to the screen.
+/// Time taken: Started: Friday 18th/11/2016	Time: 15:30 - 16:55
+///				Edited:  Monday 21st/11/2016	Time: 13:00 - 15:00
+///				Edited:  Tuesday22nd/11/2016	Time: 13:20 - 
 /// </summary>
 class Game
 {
 public:
-
+	//Declaration of all the public methods used in our game.
 	Game();
 	~Game();
 	void run();
@@ -23,6 +26,7 @@ public:
 	void update();
 	void draw();
 private:
+	//Declaration of all the private methods and objects used in our game which are not accessible by other classes.
 	void initialiseText();
 	void setTextProperties(sf::Text &text, int x, int y);
 	void drawText();
