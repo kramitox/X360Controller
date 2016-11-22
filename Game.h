@@ -7,7 +7,11 @@
 #endif // !SFML
 #include "Xbox360Controller.h"
 
-
+/// <summary>
+/// Name: Keenan McEntee
+/// Student ID: C00201892
+/// 
+/// </summary>
 class Game
 {
 public:
