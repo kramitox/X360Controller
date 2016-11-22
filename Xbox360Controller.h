@@ -37,7 +37,7 @@ class xbox360Controller
 {
 private:
 	//Deadzone for the D-Pad
-	const int dpadThreshold = 50;
+	const int DPADTHRESHOLD = 50;
 public:
 	//ID of the controller that's conected.
 	int sf_Joystick_index;
@@ -52,7 +52,7 @@ public:
 	//Method that handles updating the gamepad information
 	void update();
 	//Bool For checking if the controller is connected
-	bool isConnected();
+	bool isConnected(int i);
 	//Bool to check if we need to connect a controller.
 	bool connect();
 

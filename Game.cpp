@@ -13,6 +13,11 @@ Game::Game() : m_window(sf::VideoMode(900, 600, 32), "Controller", sf::Style::De
 /// </summary>
 void Game::initialise()
 {
+	if (!gamePad.connect())
+	{
+		gamePad.~xbox360Controller();
+	}
+	
 	if (!font.loadFromFile("times.ttf"))
 	{
 		std::cout << "Error Loading Font File" << std::endl;
@@ -51,6 +56,7 @@ void Game::update()
 {
 	
 	gamePad.update();
+	lastPressedFace();
 	// Sets the data to the analog text objects from the gamepad data structure.
 	leftAnalogX.setString(std::to_string((int)gamePad.m_currentState.LeftThumbStick.x));			
 	rightAnalogX.setString(std::to_string((int)gamePad.m_currentState.RightThumbStick.x));
@@ -77,11 +83,12 @@ void Game::update()
 	{
 		m_window.close();
 	}
+	
 	LTrigger.setString(std::to_string((int)gamePad.m_currentState.LTrigger));
 	RTrigger.setString(std::to_string((int)gamePad.m_currentState.RTrigger));
 }
 /// <summary>
-/// Draw method which 
+/// Draw method which renders everything to screen for us.
 /// </summary>
 void Game::draw()
 {
@@ -92,7 +99,9 @@ void Game::draw()
 	drawText();
 	m_window.display();
 }
-
+/// <summary>
+/// Method that handles calling for each text object to be setup.
+/// </summary>
 void Game::initialiseText()
 {
 	setTextProperties(pressedAText, 750,425);
@@ -112,8 +121,18 @@ void Game::initialiseText()
 	setTextProperties(RTrigger, 575, 30);
 	setTextProperties(dPadX, 250, 500);
 	setTextProperties(dPadY, 250, 525);
-
+	setTextProperties(previousFaceButton, 650,175);
+	setTextProperties(controllerNumber, 300, 120);
+	controllerNumber.setCharacterSize(18);
+	controllerNumber.setString("The controller is number : " + std::to_string(gamePad.sf_Joystick_index));
+	previousFaceButton.setString("No Face Buttons Pressed Yet");
 }
+/// <summary>
+/// Method which handles initialising all the text objects passed to it
+/// </summary>
+/// <param name="text"></param>
+/// <param name="x"></param>
+/// <param name="y"></param>
 void Game::setTextProperties(sf::Text &text, int x, int y)
 {
 	text.setFont(font);
@@ -122,17 +141,15 @@ void Game::setTextProperties(sf::Text &text, int x, int y)
 	text.setString("Pressed");
 	text.setPosition(x, y);
 }
-
+/// <summary>
+/// Method that handles drawing all the texts depending on if we press a button or not.
+/// </summary>
 void Game::drawText()
 {
-	//m_window.draw(leftAnalogX);
-	//m_window.draw(leftAnalogY);
 	if (gamePad.m_currentState.LeftThumbstickDown)
 	{
 		m_window.draw(leftAnalogPress);
 	}
-	//m_window.draw(rightAnalogX);
-	//m_window.draw(rightAnalogY);
 	if (gamePad.m_currentState.RightThumbstickDown)
 	{
 		m_window.draw(rightAnalogPressed);
@@ -198,5 +215,29 @@ void Game::drawText()
 	else if (gamePad.m_currentState.LTrigger > 10)
 	{
 		m_window.draw(RTrigger);
+	}
+	m_window.draw(controllerNumber);
+	m_window.draw(previousFaceButton); 
+}
+/// <summary>
+/// Method that handles which was the last face button we pressed using the previous state as help.
+/// </summary>
+void Game::lastPressedFace()
+{
+	if (gamePad.m_currentState.A && !gamePad.m_previousState.A)
+	{
+		previousFaceButton.setString("Last Face Button: A");
+	}
+	if (gamePad.m_currentState.B && !gamePad.m_previousState.B)
+	{
+		previousFaceButton.setString("Last Face Button: B");
+	}
+	if (gamePad.m_currentState.X && !gamePad.m_previousState.X)
+	{
+		previousFaceButton.setString("Last Face Button: X");
+	}
+	if (gamePad.m_currentState.Y && !gamePad.m_previousState.Y)
+	{
+		previousFaceButton.setString("Last Face Button: Y");
 	}
 }

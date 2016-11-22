@@ -30,6 +30,7 @@ private:
 	void initialiseText();
 	void setTextProperties(sf::Text &text, int x, int y);
 	void drawText();
+	void lastPressedFace();
 	sf::Texture m_background;
 	sf::Sprite m_sprite;
 
@@ -55,6 +56,8 @@ private:
 	sf::Text RTrigger;
 	sf::Text dPadX;
 	sf::Text dPadY;
+	sf::Text previousFaceButton;
+	sf::Text controllerNumber;
 	sf::RenderWindow m_window;
 	xbox360Controller gamePad;
 };
